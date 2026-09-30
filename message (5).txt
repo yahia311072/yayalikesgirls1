@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yayalikesgirls</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --pink: #ff6b9d;
+    --pink-deep: #e83e8c;
+    --purple: #9b59b6;
+    --purple-deep: #6c3483;
+    --bg-dark: #120a18;
+    --glass: rgba(255, 255, 255, 0.065);
+    --glass-border: rgba(255, 182, 213, 0.16);
+    --text: #fce4ec;
+    --muted: #c9a0b8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    background: #120a18 url('https://res.cloudinary.com/w8q7jrey/image/upload/v1790697510/Wallpaper%20backgrounds/5cf8594b2ae88b6ff358a30b9d2ed552.jpg') center/cover no-repeat fixed;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+    #gate {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(12, 6, 18, 0.72);
+    backdrop-filter: blur(18px);
+    z-index: 100;
+    transition: opacity 0.45s ease, visibility 0.45s;
+  }
+
+  #gate.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .gate-card {
+    width: min(380px, 92vw);
+    padding: 2.4rem 2rem 2rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    box-shadow:
+      0 0 0 1px rgba(255,107,157,0.08),
+      0 25px 50px -12px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    text-align: center;
+  }
+
+  .gate-logo {
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ff8fb8, #c77dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.35rem;
+  }
+
+  .gate-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  .gate-input {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    background: rgba(0,0,0,0.28);
+    border: 1px solid rgba(255,182,213,0.22);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .gate-input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(255,107,157,0.18);
+  }
+
+  .gate-input::placeholder { color: #a87a96; }
+
+  .gate-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.15s, filter 0.15s;
+  }
+
+  .gate-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .gate-btn:active { transform: translateY(0); }
+
+  .gate-error {
+    margin-top: 0.85rem;
+    font-size: 0.8rem;
+    color: #ff6b9d;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .gate-error.show { opacity: 1; }
+
+    #dashboard {
+    display: none;
+    min-height: 100vh;
+    padding: 2.75rem 1.75rem 4rem;
+  }
+
+  #dashboard.visible { display: block; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1040px;
+    margin: 0 auto 2.5rem;
+    padding: 1.15rem 1.5rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(16px);
+    box-shadow:
+      0 0 0 1px rgba(255,107,157,0.05),
+      0 18px 40px -18px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .topbar-title {
+    font-weight: 600;
+    font-size: 1.12rem;
+    letter-spacing: -0.025em;
+  }
+
+  .topbar-title span {
+    background: linear-gradient(135deg, #ff8fb8, #c77dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .logout {
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid rgba(255,182,213,0.22);
+    padding: 0.45rem 1rem;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .logout:hover {
+    color: var(--text);
+    border-color: var(--pink);
+    background: rgba(255,107,157,0.08);
+  }
+
+  .panel {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .search-row {
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1rem 1.35rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,182,213,0.18);
+    border-radius: 13px;
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.22s, box-shadow 0.22s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .search-input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(255,107,157,0.16), inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .search-input::placeholder { color: #a87a96; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.15rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .stat {
+    padding: 1.25rem 1.4rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    box-shadow:
+      0 0 0 1px rgba(255,107,157,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: border-color 0.2s;
+  }
+
+  .stat:hover {
+    border-color: rgba(255,182,213,0.28);
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ffe0ec, #e8c4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .table-wrap {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+    box-shadow:
+      0 0 0 1px rgba(255,107,157,0.04),
+      0 22px 45px -20px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 1.15rem 1.5rem;
+    font-weight: 500;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,182,213,0.1);
+    background: rgba(0,0,0,0.22);
+  }
+
+  td {
+    padding: 1.15rem 1.5rem;
+    border-bottom: 1px solid rgba(255,182,213,0.06);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td {
+    background: rgba(255,107,157,0.035);
+  }
+
+  .user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(255,107,157,0.15);
+  }
+
+  .uname { font-weight: 500; letter-spacing: -0.01em; }
+  .ip {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #e8b4d0;
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .btn {
+    padding: 0.48rem 0.95rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-crash {
+    background: rgba(255, 70, 120, 0.14);
+    color: #ff7aa8;
+    border: 1px solid rgba(255, 70, 120, 0.28);
+  }
+
+  .btn-crash:hover {
+    background: rgba(255, 70, 120, 0.28);
+    box-shadow: 0 0 16px rgba(255,70,120,0.22);
+    transform: translateY(-1px);
+  }
+
+  .btn-freeze {
+    background: rgba(155, 89, 182, 0.14);
+    color: #c99aff;
+    border: 1px solid rgba(155, 89, 182, 0.28);
+  }
+
+  .btn-freeze:hover {
+    background: rgba(155, 89, 182, 0.28);
+    box-shadow: 0 0 16px rgba(155,89,182,0.22);
+    transform: translateY(-1px);
+  }
+
+  .empty {
+    padding: 4.5rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+  }
+
+  .empty-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.45;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    padding: 0.95rem 1.35rem;
+    background: rgba(18, 8, 26, 0.94);
+    border: 1px solid rgba(255,182,213,0.22);
+    border-radius: 12px;
+    font-size: 0.86rem;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.45);
+    transform: translateY(18px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200;
+    max-width: 340px;
+    backdrop-filter: blur(10px);
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast.crash { border-color: rgba(255,70,120,0.4); }
+  .toast.freeze { border-color: rgba(155,89,182,0.4); }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: 1fr; }
+    th:nth-child(3), td:nth-child(3) { display: none; }
+    .actions { flex-direction: column; }
+    #dashboard { padding: 1.75rem 1.1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">Yayalikesgirls</div>
+    <div class="gate-sub">restricted access</div>
+    <input type="password" id="passInput" class="gate-input" placeholder="Password" autocomplete="off" spellcheck="false">
+    <button class="gate-btn" id="enterBtn">Enter</button>
+    <div class="gate-error" id="gateError">wrong password</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-title">Yayalikesgirls <span>· panel</span></div>
+    <button class="logout" id="logoutBtn">logout</button>
+  </div>
+
+  <div class="panel">
+    <div class="search-row">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search username or IP…">
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Logged</div>
+        <div class="stat-value" id="statCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Online window</div>
+        <div class="stat-value">live</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Last hit</div>
+        <div class="stat-value" id="statLast">—</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>IP</th>
+            <th>Seen</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="targetBody">
+        </tbody>
+      </table>
+      <div class="empty" id="emptyState">
+        <div class="empty-icon">◎</div>
+        No targets logged yet
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    let targets = [];
+
+  const PASS = "YAYALIKEGIRLS";
+  const gate = document.getElementById("gate");
+  const dash = document.getElementById("dashboard");
+  const passInput = document.getElementById("passInput");
+  const enterBtn = document.getElementById("enterBtn");
+  const gateError = document.getElementById("gateError");
+  const searchInput = document.getElementById("searchInput");
+  const targetBody = document.getElementById("targetBody");
+  const emptyState = document.getElementById("emptyState");
+  const statCount = document.getElementById("statCount");
+  const statLast = document.getElementById("statLast");
+  const toast = document.getElementById("toast");
+
+  function showToast(msg, type) {
+    toast.textContent = msg;
+    toast.className = "toast show " + (type || "");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toast.classList.remove("show"), 3200);
+  }
+
+  function render(list) {
+    targetBody.innerHTML = "";
+    if (!list.length) {
+      emptyState.style.display = "block";
+      return;
+    }
+    emptyState.style.display = "none";
+    list.forEach(t => {
+      const tr = document.createElement("tr");
+      const initial = t.user.charAt(0).toUpperCase();
+      tr.innerHTML = `
+        <td>
+          <div class="user-cell">
+            <div class="avatar">${initial}</div>
+            <span class="uname">${t.user}</span>
+          </div>
+        </td>
+        <td><span class="ip">${t.ip}</span></td>
+        <td style="color:var(--muted);font-size:0.85rem">${t.seen}</td>
+        <td>
+          <div class="actions">
+            <button class="btn btn-crash" data-user="${t.user}" data-act="crash">Crash</button>
+            <button class="btn btn-freeze" data-user="${t.user}" data-act="freeze">Freeze</button>
+          </div>
+        </td>`;
+      targetBody.appendChild(tr);
+    });
+  }
+
+  function filter() {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = targets.filter(t =>
+      t.user.toLowerCase().includes(q) || t.ip.includes(q)
+    );
+    render(filtered);
+  }
+
+  function tryLogin() {
+    if (passInput.value === PASS) {
+      gate.classList.add("hidden");
+      dash.classList.add("visible");
+      localStorage.setItem("yaya_auth", "1");
+      render(targets);
+      statCount.textContent = targets.length;
+      statLast.textContent = targets.length ? targets[0].seen : "—";
+    } else {
+      gateError.classList.add("show");
+      passInput.value = "";
+      passInput.focus();
+      setTimeout(() => gateError.classList.remove("show"), 1800);
+    }
+  }
+
+  enterBtn.addEventListener("click", tryLogin);
+  passInput.addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("yaya_auth");
+    location.reload();
+  });
+
+  searchInput.addEventListener("input", filter);
+
+  targetBody.addEventListener("click", e => {
+    const btn = e.target.closest(".btn");
+    if (!btn) return;
+    const user = btn.dataset.user;
+    const act = btn.dataset.act;
+
+    if (act === "crash") {
+      showToast(`Crash payload queued → ${user}  (FFlag brick)`, "crash");
+      console.log(`[C2] crash FFlag packet → ${user}`);
+    } else if (act === "freeze") {
+      showToast(`Freeze packet sent → ${user}`, "freeze");
+      console.log(`[C2] freeze packet → ${user}`);
+    }
+  });
+
+  if (localStorage.getItem("yaya_auth") === "1") {
+    gate.classList.add("hidden");
+    dash.classList.add("visible");
+    render(targets);
+    statCount.textContent = targets.length;
+    statLast.textContent = "—";
+  } else {
+    passInput.focus();
+  }
+</script>
+</body>
+</html>
